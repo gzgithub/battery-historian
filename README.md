@@ -103,6 +103,35 @@ For devices 6.0 and lower:
 $ adb bugreport > bugreport.txt
 ```
 
+### Alternative: Collect Battery data and Convert it into HTML
+
+First, collect battery data from the Android device and store it in the local host:  
+
+```
+$ adb shell dumpsys batterystats>batterystats.txt
+```
+
+Second, use Battery Historian to convert that data into an HTML file for visualization
+
+```
+$ python battery-historian/scripts/historian.py batterystats.txt >batterystats.html
+```
+
+And then you can use a browser application like Firefox to open the HTML to view the battery usage. 
+
+NOTE - 
+You can clean up old battery collection data before collecting the data: 
+
+```
+$ adb shell dumpsys batterystats --reset
+```
+
+To enable full wakelock reporting (post-KitKat only):
+
+```
+$ adb shell dumpsys batterystats --enable full-wake-history
+```
+
 ### Start analyzing!
 
 You are all set now. Run `historian` and visit <http://localhost:9999> and
