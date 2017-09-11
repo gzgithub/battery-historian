@@ -349,8 +349,12 @@ def sync_time():
   start_time = int(time.time())
   while int(time.time()) == start_time:
     pass
-  curr_time = time.strftime("%Y%m%d.%H%M%S", time.localtime())
-  subprocess.call(["adb", "shell", "date", "-s", curr_time])
+  
+  # In Andriod 6, the command date does not take the option -s to
+  # set time.
+  # TODO: need a condition here to decide which versin of date command applied
+  curr_time = time.strftime("%m%d%H%M%S", time.localtime())
+  subprocess.call(["adb", "shell", "date", curr_time])
   sys.exit(0)
 
 
